@@ -38,8 +38,6 @@ def naukri_search_by_keyword(keyword, location, sort_by):
                 if placeholder['type'] == 'location':
                     data['location'] = placeholder['label']
                     
-            data['jd_url'] = 'www.naukri.com' + job['jdURL']
-            data['job_highlights'] = cleanhtml(job['jobDescription'])
             data['time_created'] = job['footerPlaceholderLabel']
             try:
                 data['review_count'] = job['ambitionBoxData']['ReviewsCount']
