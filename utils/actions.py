@@ -18,3 +18,17 @@ def read_sheet_data(sheet_name, tab_name):
 def next_available_row(worksheet):
     str_list = list(filter(None, worksheet.col_values(1)))
     return len(str_list)+1
+
+def insert_data_row(sheet, data_to_write):
+    headers = sheet.row_values(1)
+    master_data = []
+    for data in data_to_write:
+        row_data = []
+        for header in headers:
+            try:
+                row_data.append(data[header])
+            except KeyError as k:
+                row_data.append('')
+        master_data.append(row_data)
+    sheet.append_rows(master_data)
+    return True

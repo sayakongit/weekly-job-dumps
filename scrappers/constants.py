@@ -33,3 +33,7 @@ MONSTER_PAYLOAD = {
             "start": "0",
             "locations": "india"
         }
+
+KEYWORD = 'sales'
+SORT_BY = 'f'
+LOCATION = 'india'
