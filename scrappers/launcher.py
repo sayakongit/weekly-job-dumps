@@ -11,5 +11,3 @@ def run_foundit_scrapper():
     jobs = foundit_search_by_keyword(KEYWORD, LOCATION, SORT_BY)
     data, sheet = read_sheet_data(SHEET_NAME, MONSTER_TAB)
     insert_data_row(sheet, jobs)
-    
-    
