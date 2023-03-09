@@ -1,6 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from .constants import creds_file_location, scope
+from gspread import Cell
 
 def read_sheet_data(sheet_name, tab_name):
     """
@@ -26,9 +27,19 @@ def insert_data_row(sheet, data_to_write):
         row_data = []
         for header in headers:
             try:
-                row_data.append(data[header])
+                row_data.append(data[header.lower()])
             except KeyError as k:
                 row_data.append('')
         master_data.append(row_data)
     sheet.append_rows(master_data)
     return True
+
+def add_headers(sheet, headers):
+    row = 1
+    col = 1
+    
+    cells = []
+    for header in headers:
+        cells.append(Cell(row=row, col=col, value=header.upper()))
+        col += 1
+    sheet.update_cells(cells)

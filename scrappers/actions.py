@@ -55,7 +55,6 @@ def foundit_search_by_keyword(keyword, location, sort_by):
     url = MONSTER_JOB_SEARCH_ENDPOINT
     MONSTER_PAYLOAD['query'] = keyword
     
-    print('SORT', sort_by)
     if location != '':
         MONSTER_PAYLOAD['locations'] = location
     if sort_by != '':
