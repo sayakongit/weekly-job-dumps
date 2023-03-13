@@ -21,5 +21,3 @@ def run_foundit_scrapper():
         insert_data_row(sheet, jobs)
     except Exception as e:
         print(f'Error in Monster search automation --> {e}')
-        
-run_naukri_scrapper()
