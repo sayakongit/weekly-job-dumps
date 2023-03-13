@@ -22,4 +22,4 @@ def run_foundit_scrapper():
     except Exception as e:
         print(f'Error in Monster search automation --> {e}')
         
-run_foundit_scrapper()
+run_naukri_scrapper()

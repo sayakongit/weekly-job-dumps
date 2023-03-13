@@ -19,6 +19,16 @@ def foundit_search_by_id(job_id):
     
     return search_details['jobDetailResponse']
 
+def naukri_search_by_id(job_id):
+    url = "https://www.naukri.com/jobapi/v4/job/" + job_id
+    
+    response = requests.get(url, headers=NAUKRI_JOB_DETAILS_HEADERS)
+    data = {}
+    status = response.status_code
+    search_details = response.json()
+
+    return search_details['jobDetails']
+
 def naukri_search_by_keyword(keyword, location, sort_by):
     url = "https://www.naukri.com/jobapi/v3/search?"
     payload = {
@@ -39,7 +49,6 @@ def naukri_search_by_keyword(keyword, location, sort_by):
             data = {}
             data['title'] = job['title']
             data['company_name'] = job['companyName']
-            data['skills'] = job['tagsAndSkills'].split(',')
             
             for placeholder in job['placeholders']:
                 if placeholder['type'] == 'experience':
@@ -54,8 +63,16 @@ def naukri_search_by_keyword(keyword, location, sort_by):
                 data['review_count'] = job['ambitionBoxData']['ReviewsCount']
                 data['ratings'] = job['ambitionBoxData']['AggregateRating']
             except:
-                data['review_count'] = ''
-                data['ratings'] = ''
+                data['review_count'] = 'NA'
+                data['ratings'] = 'NA'
+                
+            try:
+                job_details = naukri_search_by_id(job['jobId'])
+                data['industry'] = job_details['roleCategory']
+            except:
+                data['industry'] = 'NA'
+                
+            data['posted_by'] = 'NA'
             all_jobs.append(data)
 
         return all_jobs
