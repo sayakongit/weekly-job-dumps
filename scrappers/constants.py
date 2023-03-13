@@ -42,4 +42,4 @@ SHEET_NAME = 'Jobs'
 NAUKRI_TAB = 'Naukri'
 MONSTER_TAB = 'Monster'
 
-HEADERS = ['title', 'company_name', 'experience', 'salary', 'location', 'time_created', 'review_count', 'ratings']
+HEADERS = ['title', 'company_name', 'experience', 'salary', 'location', 'time_created', 'review_count', 'ratings', 'industry', 'posted_by']

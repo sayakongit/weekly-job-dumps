@@ -1,5 +1,5 @@
 from urllib.parse import urlencode
-from .constants import NAUKRI_JOB_DETAILS_HEADERS, NAUKRI_ALL_JOBS_HEADERS, MONSTER_API_HEADERS, MONSTER_PAYLOAD, MONSTER_JOB_SEARCH_ENDPOINT
+from .constants import NAUKRI_JOB_DETAILS_HEADERS, NAUKRI_ALL_JOBS_HEADERS, MONSTER_API_HEADERS, MONSTER_PAYLOAD, MONSTER_JOB_SEARCH_ENDPOINT, MONSTER_JOB_DETAILS_ENDPOINT
 import requests
 import re
 
@@ -7,6 +7,17 @@ def cleanhtml(raw_html):
     CLEANR = re.compile('<.*?>')
     cleantext = re.sub(CLEANR, '', raw_html)
     return cleantext
+
+def foundit_search_by_id(job_id):
+    url = MONSTER_JOB_DETAILS_ENDPOINT + str(job_id)
+    
+    try:
+        search_details = requests.get(url, headers=MONSTER_API_HEADERS).json()
+    except Exception as e:
+        print(e)
+        return {'error': 'Could not fetch data'}
+    
+    return search_details['jobDetailResponse']
 
 def naukri_search_by_keyword(keyword, location, sort_by):
     url = "https://www.naukri.com/jobapi/v3/search?"
@@ -86,8 +97,18 @@ def foundit_search_by_keyword(keyword, location, sort_by):
                             
                     data['time_created'] = job['postedBy']
 
-                    data['review_count'] = ''
-                    data['ratings'] = ''
+                    data['review_count'] = 'NA'
+                    data['ratings'] = 'NA'
+                
+                    
+                    try:
+                        job_details = foundit_search_by_id(job['jobId'])
+                        data['industry'] = ",".join(job_details['industries'])
+                    except:
+                        data['industry'] = 'NA'
+                        
+                    data['posted_by'] = 'NA'
+                    
                     
                     jobs.append(data)
         else:
@@ -96,3 +117,6 @@ def foundit_search_by_keyword(keyword, location, sort_by):
         print(e)
         return {'error': 'Error'}
     return jobs
+    
+    
+    
