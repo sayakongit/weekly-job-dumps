@@ -29,7 +29,7 @@ def naukri_search_by_id(job_id):
 
     return search_details['jobDetails']
 
-def naukri_search_by_keyword(keyword, location, sort_by):
+def naukri_search_by_keyword(keyword, location, sort_by, posted_by):
     url = "https://www.naukri.com/jobapi/v3/search?"
     payload = {
         "urlType": "search_by_keyword",
@@ -37,7 +37,8 @@ def naukri_search_by_keyword(keyword, location, sort_by):
         "keyword": keyword,
         "location": location,
         "sort": sort_by,
-        "noOfResults": 100
+        "noOfResults": 50,
+        "jobPostType": "1"  # 1 -> Company, 2 -> Consultant
     }
     
     response = requests.get(url, params=urlencode(payload),  headers=NAUKRI_ALL_JOBS_HEADERS)
@@ -72,7 +73,7 @@ def naukri_search_by_keyword(keyword, location, sort_by):
             except:
                 data['industry'] = 'NA'
                 
-            data['posted_by'] = 'NA'
+            data['posted_by'] = 'Company' if posted_by == '1' else 'Consultant'
             all_jobs.append(data)
 
         return all_jobs

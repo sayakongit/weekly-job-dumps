@@ -4,7 +4,9 @@ from .constants import KEYWORD, LOCATION, SORT_BY, SHEET_NAME, NAUKRI_TAB, MONST
 
 def run_naukri_scrapper():
     try:
-        jobs = naukri_search_by_keyword(KEYWORD, LOCATION, SORT_BY)
+        jobs_one = naukri_search_by_keyword(KEYWORD, LOCATION, SORT_BY, "1")
+        jobs_two = naukri_search_by_keyword(KEYWORD, LOCATION, SORT_BY, "2")
+        jobs = jobs_one + jobs_two
         data, sheet = read_sheet_data(SHEET_NAME, NAUKRI_TAB)
         sheet.clear()
         add_headers(sheet, HEADERS)
