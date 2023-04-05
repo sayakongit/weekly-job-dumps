@@ -35,7 +35,7 @@ MONSTER_PAYLOAD = {
         }
 
 KEYWORD = 'sales'
-SORT_BY = 'f'
+SORT_BY = ''
 LOCATION = 'india'
 
 SHEET_NAME = 'Jobs'
